@@ -11,7 +11,7 @@
       />
     </div>
     <button
-      @click="showForm = true"
+      @click="addNewTask"
       class="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
     >
       Add Task
@@ -41,12 +41,17 @@ const updateTask = (task) => store.commit("updateTask", task);
 const deleteTask = (taskId) => store.commit("deleteTask", taskId);
 
 const showForm = ref(false);
+const editingTask = ref(null);
 
 const editTask = (task) => {
-  console.log("asdf");
+  editingTask.value = task;
   showForm.value = true;
 };
 
+const addNewTask = () => {
+  editingTask.value = null;
+  showForm.value = true;
+};
 const saveTask = (task) => {
   if (task.id) {
     updateTask(task);

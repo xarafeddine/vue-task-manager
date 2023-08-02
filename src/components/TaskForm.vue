@@ -57,6 +57,7 @@
 import { ref, defineProps } from "vue";
 
 const { task } = defineProps(["task"]);
+console.log("task", task);
 const emit = defineEmits(["save", "cancel"]);
 
 const editing = !!task;

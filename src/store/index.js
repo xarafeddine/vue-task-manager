@@ -12,7 +12,7 @@ const mutations = {
     state.tasks = tasks;
   },
   addTask(state, task) {
-    state.tasks.push(task);
+    state.tasks.push({ ...task, id: state.tasks.length });
   },
   updateTask(state, updatedTask) {
     const index = state.tasks.findIndex((task) => task.id === updatedTask.id);
