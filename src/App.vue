@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto p-4">
+  <div class="max-w-max mx-auto p-4">
     <header>
       <h1 class="text-4xl font-bold mb-8">Task Manager App</h1>
     </header>
