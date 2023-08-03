@@ -1,5 +1,11 @@
 <template>
   <div>
+    <button
+      @click="addNewTask"
+      class="my-4 mx-auto bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+    >
+      Add Task
+    </button>
     <div v-if="tasks.length === 0">No tasks found.</div>
     <div v-else>
       <TaskItem
@@ -10,12 +16,7 @@
         @delete="removeTask"
       />
     </div>
-    <button
-      @click="addNewTask"
-      class="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-    >
-      Add Task
-    </button>
+
     <!-- Modal for TaskForm -->
     <div
       v-if="showForm"
@@ -36,9 +37,9 @@ const store = useStore();
 
 const tasks = computed(() => store.state.tasks);
 
-const addTask = (task) => store.commit("addTask", task);
-const updateTask = (task) => store.commit("updateTask", task);
-const deleteTask = (taskId) => store.commit("deleteTask", taskId);
+const addTask = (task) => store.dispatch("addTaskAction", task);
+const updateTask = (task) => store.dispatch("updateTaskAction", task);
+const deleteTask = (taskId) => store.dispatch("deleteTaskAction", taskId);
 
 const showForm = ref(false);
 const editingTask = ref(null);
@@ -52,18 +53,18 @@ const addNewTask = () => {
   editingTask.value = null;
   showForm.value = true;
 };
-const saveTask = (task) => {
+const saveTask = async (task) => {
   if (task.id) {
-    updateTask(task);
+    await updateTask(task);
   } else {
-    addTask(task);
+    await addTask(task);
   }
   showForm.value = false;
 };
 
-const removeTask = (id) => {
+const removeTask = async (id) => {
   console.log(id);
-  deleteTask(id);
+  await deleteTask(id);
 };
 
 const cancelForm = () => {

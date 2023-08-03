@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto p-4">
     <header>
-      <h1 class="text-4xl font-bold mb-4">Task Manager App</h1>
+      <h1 class="text-4xl font-bold mb-8">Task Manager App</h1>
     </header>
     <div>
       <TaskList />
@@ -10,6 +10,13 @@
 </template>
 
 <script setup>
-import "@/assets/tailwind.css";
 import TaskList from "./components/TaskList.vue";
+import { useStore } from "vuex";
+import { onMounted } from "vue";
+
+const store = useStore();
+const fetchTasksAction = () => store.dispatch("fetchTasksAction");
+onMounted(async () => {
+  await fetchTasksAction();
+});
 </script>

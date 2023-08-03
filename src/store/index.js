@@ -1,37 +1,73 @@
 import { createStore } from "vuex";
+import {
+  fetchTasks,
+  addTask,
+  updateTask,
+  deleteTask,
+} from "@/services/taskService";
 
 const state = {
-  tasks: [
-    { id: 1, title: "wakeup from sleep", description: "wakeup from sleep" },
-    { id: 2, title: "pray the fajr sala", description: "pray the fajr sala" },
-  ],
+  tasks: [],
 };
 
 const mutations = {
-  setTasks(state, tasks) {
+  SET_TASKS(state, tasks) {
     state.tasks = tasks;
   },
-  addTask(state, task) {
-    state.tasks.push({ ...task, id: state.tasks.length });
+  ADD_TASK(state, task) {
+    state.tasks = [task, ...state.tasks];
   },
-  updateTask(state, updatedTask) {
+  UPDATE_TASK(state, updatedTask) {
     const index = state.tasks.findIndex((task) => task.id === updatedTask.id);
     if (index !== -1) {
       state.tasks.splice(index, 1, updatedTask);
     }
   },
-  deleteTask(state, taskId) {
+  DELETE_TASK(state, taskId) {
     state.tasks = state.tasks.filter((task) => task.id !== taskId);
   },
 };
 
 const actions = {
-  // Your async actions here (e.g., API calls)
+  async fetchTasksAction({ commit }) {
+    try {
+      const tasks = await fetchTasks();
+      commit("SET_TASKS", tasks);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
+  },
+  async addTaskAction({ commit }, newTask) {
+    try {
+      const addedTask = await addTask(newTask);
+      commit("ADD_TASK", {
+        ...addedTask,
+        id: new Date().toISOString(),
+      });
+    } catch (error) {
+      console.error("Error adding task:", error);
+    }
+  },
+  async updateTaskAction({ commit }, updatedTask) {
+    try {
+      const updatedTaskResponse = await updateTask(updatedTask);
+      commit("UPDATE_TASK", updatedTaskResponse);
+    } catch (error) {
+      console.error("Error updating task:", error);
+      commit("UPDATE_TASK", updatedTask);
+    }
+  },
+  async deleteTaskAction({ commit }, taskId) {
+    try {
+      await deleteTask(taskId);
+      commit("DELETE_TASK", taskId);
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
+  },
 };
 
-const getters = {
-  // Your getters here
-};
+const getters = {};
 
 export default createStore({
   state,
