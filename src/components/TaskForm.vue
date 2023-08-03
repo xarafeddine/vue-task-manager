@@ -10,10 +10,10 @@
         >
         <input
           v-model="formTitle"
-          placeholder="the Title"
+          placeholder="Enter a Title"
           type="text"
           id="title"
-          class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 h-8"
+          class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-600 h-8 p-2"
           required
         />
       </div>
@@ -23,10 +23,10 @@
         >
         <textarea
           v-model="formDescription"
-          placeholder="Your description"
+          placeholder="Enter a description"
           id="description"
           rows="4"
-          class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 h-40"
+          class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-600 h-40 p-2"
         ></textarea>
       </div>
       <div class="flex justify-end">
